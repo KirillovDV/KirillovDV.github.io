@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Accord Manual — интерактивное руководство для Honda Accord VII.">
+  <title>Accord Manual — Honda Accord VII</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../Static/accord-manual-landing.css">
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <nav class="nav container" aria-label="Основная навигация">
+        <a class="brand" href="#top" aria-label="Accord Manual">
+          <img src="../Static/accord-manual-logo.png" alt="">
+          <span>Accord Manual</span>
+        </a>
+        <a class="nav-link" href="#support" data-i18n="navSupport">Поддержка</a>
+      </nav>
+
+      <div class="container hero-content" id="top">
+        <div class="hero-copy">
+          <p class="eyebrow" data-i18n="eyebrow">Honda Accord VII · 2003–2008</p>
+          <h1 data-i18n="title">Всё руководство Honda Accord VII — в вашем кармане</h1>
+          <p class="lede" data-i18n="lede">Accord Manual объединяет документацию, диагностику, схемы и каталоги деталей в одном быстром и понятном приложении.</p>
+          <div class="hero-actions">
+            <a class="button button-primary is-disabled" href="#" data-app-store aria-disabled="true" data-i18n="appStore">Скачать в App Store</a>
+            <a class="button button-secondary" href="#screenshots" data-i18n="screenshotsButton">Посмотреть экраны</a>
+          </div>
+          <p class="availability" data-i18n="availability">Скоро в App Store</p>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="logo-orbit"></div>
+          <img src="../Static/accord-manual-logo.png" alt="">
+        </div>
+      </div>
+    </section>
+
+    <section class="section container overview" aria-labelledby="overview-title">
+      <p class="section-label" data-i18n="overviewLabel">Возможности</p>
+      <h2 id="overview-title" data-i18n="overviewTitle">Нужная информация — без долгих поисков</h2>
+      <div class="feature-grid">
+        <article class="feature-card">
+          <span class="feature-number">01</span>
+          <h3 data-i18n="featureOneTitle">Полная документация</h3>
+          <p data-i18n="featureOneText">Разделы по обслуживанию, двигателю, трансмиссии, тормозам, электрике, кузову и другим системам Accord VII.</p>
+        </article>
+        <article class="feature-card">
+          <span class="feature-number">02</span>
+          <h3 data-i18n="featureTwoTitle">Поиск по всем разделам</h3>
+          <p data-i18n="featureTwoText">Быстро находите нужные статьи, компоненты и коды неисправностей по ключевым словам.</p>
+        </article>
+        <article class="feature-card">
+          <span class="feature-number">03</span>
+          <h3 data-i18n="featureThreeTitle">Диагностика по шагам</h3>
+          <p data-i18n="featureThreeText">Понятные сценарии для DTC-кодов и процедур ремонта помогают двигаться от причины к решению.</p>
+        </article>
+        <article class="feature-card">
+          <span class="feature-number">04</span>
+          <h3 data-i18n="featureFourTitle">Схемы и детали</h3>
+          <p data-i18n="featureFourText">Открывайте электрические схемы и каталоги деталей, переходя от изображения к нужной инструкции.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="showcase" id="screenshots" aria-labelledby="gallery-title">
+      <div class="container showcase-header">
+        <div>
+          <p class="section-label section-label-light" data-i18n="galleryLabel">Интерфейс</p>
+          <h2 id="gallery-title" data-i18n="galleryTitle">Создано для iPhone и iPad</h2>
+        </div>
+        <div class="device-select" data-device-select role="group" aria-label="Выбор устройства">
+          <button type="button" class="device-button is-active" data-device="iphone" aria-pressed="true">iPhone</button>
+          <button type="button" class="device-button" data-device="ipad" aria-pressed="false">iPad</button>
+        </div>
+      </div>
+
+      <div class="container carousel" data-carousel>
+        <div class="carousel-frame">
+          <img data-carousel-image src="../Static/accord-manual/iphone/01-manual.jpg" alt="Экран руководства Accord Manual на iPhone">
+        </div>
+        <div class="carousel-controls">
+          <button class="arrow-button" type="button" data-carousel-previous aria-label="Предыдущий скриншот">←</button>
+          <p class="slide-caption" data-carousel-caption></p>
+          <button class="arrow-button" type="button" data-carousel-next aria-label="Следующий скриншот">→</button>
+        </div>
+        <div class="carousel-dots" data-carousel-dots aria-label="Выбор скриншота"></div>
+      </div>
+    </section>
+
+    <section class="section container support" id="support" aria-labelledby="support-title">
+      <p class="section-label" data-i18n="supportLabel">Поддержка</p>
+      <h2 id="support-title" data-i18n="supportTitle">Нужна помощь с Accord Manual?</h2>
+      <p class="support-copy" data-i18n="supportText">Напишите мне, если есть вопрос по приложению или вы нашли ошибку. Для баг-репорта укажите версию приложения, iOS, устройство и шаги, после которых появилась проблема.</p>
+      <div class="contact-actions">
+        <a class="button button-primary" href="mailto:mail@deniskirillov.com" data-i18n="emailButton">Написать на почту</a>
+        <a class="button button-telegram" href="tg://resolve?domain=KirillovDV" data-i18n="telegramButton">Написать в Telegram</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>© <span id="year"></span> Denis Kirillov</p>
+      <a href="../PrivacyPolicy.html" data-i18n="privacy">Политика конфиденциальности</a>
+    </div>
+    <div class="container language-row">
+      <span data-i18n="language">Язык</span>
+      <div class="language-toggle" data-language-toggle role="group" aria-label="Выбор языка">
+        <button type="button" data-language="ru" class="is-active" aria-pressed="true">Русский</button>
+        <button type="button" data-language="en" aria-pressed="false">English</button>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="../Static/accord-manual.mjs"></script>
+</body>
+</html>
