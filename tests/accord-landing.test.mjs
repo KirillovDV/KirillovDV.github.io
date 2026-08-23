@@ -26,6 +26,19 @@ test("landing offers the supplied TestFlight build", () => {
   assert.match(page, /href="https:\/\/testflight\.apple\.com\/join\/Cy9x6aCU"/);
 });
 
+test("landing omits the obsolete screenshots button and includes Safari control fallbacks", () => {
+  const page = readFileSync(landingPath, "utf8");
+  const styles = readFileSync(join(root, "Static", "accord-manual-landing.css"), "utf8");
+  const script = readFileSync(join(root, "Static", "accord-manual.js"), "utf8");
+
+  assert.doesNotMatch(page, /href="#screenshots"/);
+  assert.doesNotMatch(script, /screenshotsButton/);
+  assert.match(styles, /width:\s*min\(1120px,\s*calc\(100% - 32px\)\)/);
+  assert.doesNotMatch(styles, /min\(100% - 32px,/);
+  assert.match(styles, /-webkit-appearance:\s*none/);
+  assert.match(styles, /-webkit-backdrop-filter:\s*blur\(8px\)/);
+});
+
 test("landing copy does not mention Honda", () => {
   const landingFiles = [
     readFileSync(landingPath, "utf8"),

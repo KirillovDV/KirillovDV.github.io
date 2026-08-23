@@ -27,7 +27,7 @@ const copy = {
   ru: {
     navSupport: "Поддержка", eyebrow: "Accord VII · 2003–2008", title: "Всё руководство Accord VII — в вашем кармане",
     lede: "Accord Manual объединяет документацию, диагностику, схемы и каталоги деталей в одном быстром и понятном приложении.",
-    appStore: "Скачать в App Store", testFlightButton: "Доступно в TestFlight", screenshotsButton: "Посмотреть экраны", availability: "Скоро в App Store",
+    appStore: "Скачать в App Store", testFlightButton: "Доступно в TestFlight", availability: "Скоро в App Store",
     overviewLabel: "Возможности", overviewTitle: "Нужная информация — без долгих поисков",
     featureOneTitle: "Полная документация", featureOneText: "Разделы по обслуживанию, двигателю, трансмиссии, тормозам, электрике, кузову и другим системам Accord VII.",
     featureTwoTitle: "Поиск по всем разделам", featureTwoText: "Быстро находите нужные статьи, компоненты и коды неисправностей по ключевым словам.",
@@ -41,7 +41,7 @@ const copy = {
   en: {
     navSupport: "Support", eyebrow: "Accord VII · 2003–2008", title: "Your Accord VII manual — always within reach",
     lede: "Accord Manual brings documentation, diagnostics, diagrams, and parts catalogues together in one fast, clear app.",
-    appStore: "Download on the App Store", testFlightButton: "Available on TestFlight", screenshotsButton: "Explore the screens", availability: "Coming soon to the App Store",
+    appStore: "Download on the App Store", testFlightButton: "Available on TestFlight", availability: "Coming soon to the App Store",
     overviewLabel: "Features", overviewTitle: "The information you need, without the search",
     featureOneTitle: "Complete documentation", featureOneText: "Explore maintenance, engine, transmission, brakes, electrics, bodywork, and other Accord VII systems.",
     featureTwoTitle: "Search every section", featureTwoText: "Find the right article, component, or diagnostic trouble code with a simple keyword search.",
