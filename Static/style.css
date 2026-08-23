@@ -151,6 +151,20 @@ canvas {
   font-size: 18;
 }
 
+.SupportLink {
+  display: block;
+  margin-top: 18px;
+  font-size: 16px;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.SupportLink:hover,
+.SupportLink:focus-visible {
+  color: white;
+  text-decoration: underline;
+}
+
 .VCenterAlignedContainer {
 
 }

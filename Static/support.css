@@ -1,0 +1,170 @@
+:root {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body.support-page {
+  min-height: 100vh;
+  margin: 0;
+  padding: 48px 24px;
+  display: grid;
+  place-items: center;
+  background: #000;
+  color: #fff;
+  font-family: "Nunito", sans-serif;
+}
+
+#particles-js {
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+}
+
+.support-card {
+  width: min(100%, 620px);
+  padding: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 28px;
+  background: rgba(0, 0, 0, 0.62);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
+}
+
+.support-back {
+  display: inline-block;
+  margin-bottom: 28px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 15px;
+  text-decoration: none;
+}
+
+.support-back:hover,
+.support-back:focus-visible {
+  color: #fff;
+  text-decoration: underline;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(32px, 7vw, 44px);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+
+.support-intro {
+  margin: 12px 0 32px;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 18px;
+  line-height: 1.55;
+}
+
+.support-form {
+  display: grid;
+  gap: 20px;
+}
+
+.form-field {
+  display: grid;
+  gap: 8px;
+}
+
+label {
+  font-size: 16px;
+}
+
+input,
+textarea {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.54);
+  border-radius: 12px;
+  padding: 13px 15px;
+  background: rgba(0, 0, 0, 0.35);
+  color: #fff;
+  font: inherit;
+  font-size: 16px;
+  line-height: 1.4;
+  outline: none;
+}
+
+textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: rgba(255, 255, 255, 0.38);
+}
+
+input:focus,
+textarea:focus {
+  border-color: #fff;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.18);
+}
+
+input[aria-invalid="true"],
+textarea[aria-invalid="true"] {
+  border-color: #ff9d9d;
+}
+
+.field-error {
+  min-height: 1.2em;
+  color: #ffb1b1;
+  font-size: 14px;
+}
+
+.submit-button {
+  min-height: 48px;
+  border: 1px solid #fff;
+  border-radius: 999px;
+  background: #fff;
+  color: #000;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 150ms ease, background-color 150ms ease;
+}
+
+.submit-button:hover:not(:disabled),
+.submit-button:focus-visible:not(:disabled) {
+  transform: scale(1.025);
+  background: #eaeaea;
+}
+
+.submit-button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.form-status {
+  min-height: 1.4em;
+  margin: 0;
+  font-size: 15px;
+}
+
+.privacy-note {
+  margin: 4px 0 0;
+  color: rgba(255, 255, 255, 0.54);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.honeypot {
+  position: absolute;
+  left: -9999px;
+}
+
+@media (max-width: 560px) {
+  body.support-page {
+    padding: 24px 16px;
+  }
+
+  .support-card {
+    padding: 28px 22px;
+    border-radius: 22px;
+  }
+}
