@@ -1,6 +1,6 @@
 const slides = {
   iphone: [
-    { src: "../Static/accord-manual/iphone/01-manual.jpg", ru: "Полное руководство по системам Honda Accord VII", en: "Complete Honda Accord VII manual" },
+    { src: "../Static/accord-manual/iphone/01-manual.jpg", ru: "Полное руководство по системам Accord VII", en: "Complete Accord VII manual" },
     { src: "../Static/accord-manual/iphone/02-search.jpg", ru: "Поиск по всем разделам", en: "Search across every section" },
     { src: "../Static/accord-manual/iphone/03-diagnostics.jpg", ru: "Пошаговая диагностика и ремонт", en: "Step-by-step diagnostics and repair" },
     { src: "../Static/accord-manual/iphone/04-links.jpg", ru: "Переход от схемы к нужной инструкции", en: "Jump from a diagram to the right instruction" },
@@ -15,19 +15,19 @@ const slides = {
   ],
 };
 
-export function getSlidesForDevice(device) {
+function getSlidesForDevice(device) {
   return slides[device] || slides.iphone;
 }
 
-export function getNextIndex(index, total, direction) {
+function getNextIndex(index, total, direction) {
   return (index + direction + total) % total;
 }
 
 const copy = {
   ru: {
-    navSupport: "Поддержка", eyebrow: "Honda Accord VII · 2003–2008", title: "Всё руководство Honda Accord VII — в вашем кармане",
+    navSupport: "Поддержка", eyebrow: "Accord VII · 2003–2008", title: "Всё руководство Accord VII — в вашем кармане",
     lede: "Accord Manual объединяет документацию, диагностику, схемы и каталоги деталей в одном быстром и понятном приложении.",
-    appStore: "Скачать в App Store", screenshotsButton: "Посмотреть экраны", availability: "Скоро в App Store",
+    appStore: "Скачать в App Store", testFlightButton: "Доступно в TestFlight", screenshotsButton: "Посмотреть экраны", availability: "Скоро в App Store",
     overviewLabel: "Возможности", overviewTitle: "Нужная информация — без долгих поисков",
     featureOneTitle: "Полная документация", featureOneText: "Разделы по обслуживанию, двигателю, трансмиссии, тормозам, электрике, кузову и другим системам Accord VII.",
     featureTwoTitle: "Поиск по всем разделам", featureTwoText: "Быстро находите нужные статьи, компоненты и коды неисправностей по ключевым словам.",
@@ -39,9 +39,9 @@ const copy = {
     previous: "Предыдущий скриншот", next: "Следующий скриншот", selectSlide: "Открыть скриншот",
   },
   en: {
-    navSupport: "Support", eyebrow: "Honda Accord VII · 2003–2008", title: "Your Honda Accord VII manual — always within reach",
+    navSupport: "Support", eyebrow: "Accord VII · 2003–2008", title: "Your Accord VII manual — always within reach",
     lede: "Accord Manual brings documentation, diagnostics, diagrams, and parts catalogues together in one fast, clear app.",
-    appStore: "Download on the App Store", screenshotsButton: "Explore the screens", availability: "Coming soon to the App Store",
+    appStore: "Download on the App Store", testFlightButton: "Available on TestFlight", screenshotsButton: "Explore the screens", availability: "Coming soon to the App Store",
     overviewLabel: "Features", overviewTitle: "The information you need, without the search",
     featureOneTitle: "Complete documentation", featureOneText: "Explore maintenance, engine, transmission, brakes, electrics, bodywork, and other Accord VII systems.",
     featureTwoTitle: "Search every section", featureTwoText: "Find the right article, component, or diagnostic trouble code with a simple keyword search.",
@@ -62,8 +62,10 @@ function initialiseLanding() {
   const dots = document.querySelector("[data-carousel-dots]");
   const previous = document.querySelector("[data-carousel-previous]");
   const next = document.querySelector("[data-carousel-next]");
-  const deviceButtons = document.querySelectorAll("[data-device]");
+  const deviceButtons = document.querySelectorAll("[data-device-select] button");
   const languageButtons = document.querySelectorAll("[data-language]");
+  const carouselStage = document.querySelector("[data-carousel-stage]");
+  const carouselFrame = document.querySelector("[data-carousel-frame]");
   let device = "iphone";
   let index = 0;
   let language = "ru";
@@ -74,15 +76,16 @@ function initialiseLanding() {
     image.src = slide.src;
     image.alt = slide[language];
     caption.textContent = slide[language];
-    dots.replaceChildren(...currentSlides.map((_, dotIndex) => {
+    dots.innerHTML = "";
+    currentSlides.forEach((_, dotIndex) => {
       const dot = document.createElement("button");
       dot.type = "button";
       dot.className = `carousel-dot${dotIndex === index ? " is-active" : ""}`;
       dot.setAttribute("aria-label", `${copy[language].selectSlide} ${dotIndex + 1}`);
       dot.setAttribute("aria-pressed", String(dotIndex === index));
       dot.addEventListener("click", () => { index = dotIndex; renderCarousel(); });
-      return dot;
-    }));
+      dots.appendChild(dot);
+    });
   }
 
   function setLanguage(nextLanguage) {
@@ -109,6 +112,8 @@ function initialiseLanding() {
       button.classList.toggle("is-active", selected);
       button.setAttribute("aria-pressed", String(selected));
     });
+    carouselStage.className = `carousel-stage is-${device}`;
+    carouselFrame.className = `carousel-frame is-${device}`;
     renderCarousel();
   }
 
@@ -127,6 +132,12 @@ function initialiseLanding() {
   renderCarousel();
 }
 
+globalThis.AccordManual = { getSlidesForDevice, getNextIndex };
+
 if (typeof document !== "undefined") {
-  initialiseLanding();
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initialiseLanding, { once: true });
+  } else {
+    initialiseLanding();
+  }
 }

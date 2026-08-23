@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Accord Manual — интерактивное руководство для Honda Accord VII.">
-  <title>Accord Manual — Honda Accord VII</title>
+  <meta name="description" content="Accord Manual — интерактивное руководство для Accord VII.">
+  <title>Accord Manual — Accord VII</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
@@ -23,11 +23,12 @@
 
       <div class="container hero-content" id="top">
         <div class="hero-copy">
-          <p class="eyebrow" data-i18n="eyebrow">Honda Accord VII · 2003–2008</p>
-          <h1 data-i18n="title">Всё руководство Honda Accord VII — в вашем кармане</h1>
+          <p class="eyebrow" data-i18n="eyebrow">Accord VII · 2003–2008</p>
+          <h1 data-i18n="title">Всё руководство Accord VII — в вашем кармане</h1>
           <p class="lede" data-i18n="lede">Accord Manual объединяет документацию, диагностику, схемы и каталоги деталей в одном быстром и понятном приложении.</p>
           <div class="hero-actions">
             <a class="button button-primary is-disabled" href="#" data-app-store aria-disabled="true" data-i18n="appStore">Скачать в App Store</a>
+            <a class="button button-testflight" href="https://testflight.apple.com/join/Cy9x6aCU" target="_blank" rel="noopener" data-i18n="testFlightButton">Доступно в TestFlight</a>
             <a class="button button-secondary" href="#screenshots" data-i18n="screenshotsButton">Посмотреть экраны</a>
           </div>
           <p class="availability" data-i18n="availability">Скоро в App Store</p>
@@ -79,13 +80,15 @@
       </div>
 
       <div class="container carousel" data-carousel>
-        <div class="carousel-frame">
+        <div class="carousel-stage is-iphone" data-carousel-stage>
+          <button class="arrow-button arrow-button-previous" type="button" data-carousel-previous aria-label="Предыдущий скриншот">←</button>
+          <div class="carousel-frame is-iphone" data-carousel-frame>
           <img data-carousel-image src="../Static/accord-manual/iphone/01-manual.jpg" alt="Экран руководства Accord Manual на iPhone">
+          </div>
+          <button class="arrow-button arrow-button-next" type="button" data-carousel-next aria-label="Следующий скриншот">→</button>
         </div>
         <div class="carousel-controls">
-          <button class="arrow-button" type="button" data-carousel-previous aria-label="Предыдущий скриншот">←</button>
           <p class="slide-caption" data-carousel-caption></p>
-          <button class="arrow-button" type="button" data-carousel-next aria-label="Следующий скриншот">→</button>
         </div>
         <div class="carousel-dots" data-carousel-dots aria-label="Выбор скриншота"></div>
       </div>
@@ -116,6 +119,6 @@
     </div>
   </footer>
 
-  <script type="module" src="../Static/accord-manual.mjs"></script>
+  <script src="../Static/accord-manual.js" defer></script>
 </body>
 </html>
