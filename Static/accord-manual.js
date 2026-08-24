@@ -62,8 +62,8 @@ const copy = {
 };
 
 function initialiseLanding() {
-  const image = document.querySelector("[data-carousel-image]");
-  if (!image) return;
+  const track = document.querySelector("[data-carousel-track]");
+  if (!track) return;
 
   const caption = document.querySelector("[data-carousel-caption]");
   const dots = document.querySelector("[data-carousel-dots]");
@@ -76,14 +76,20 @@ function initialiseLanding() {
   let device = "iphone";
   let index = 0;
   let language = "ru";
-  let isAnimating = false;
-  let touchStart = null;
+  let pointerStart = null;
 
   function renderCarousel() {
     const currentSlides = getSlidesForDevice(device);
     const slide = currentSlides[index];
-    image.src = slide.src;
-    image.alt = slide[language];
+    track.innerHTML = "";
+    currentSlides.forEach((currentSlide, slideIndex) => {
+      const image = document.createElement("img");
+      image.src = currentSlide.src;
+      image.alt = slideIndex === index ? currentSlide[language] : "";
+      image.draggable = false;
+      track.appendChild(image);
+    });
+    track.style.transform = `translate3d(${-index * 100}%, 0, 0)`;
     caption.textContent = slide[language];
     dots.innerHTML = "";
     currentSlides.forEach((_, dotIndex) => {
@@ -100,33 +106,10 @@ function initialiseLanding() {
     });
   }
 
-  function resetSlideAnimation() {
-    image.classList.remove("is-leaving-next");
-    image.classList.remove("is-leaving-previous");
-    image.classList.remove("is-entering-next");
-    image.classList.remove("is-entering-previous");
-  }
-
   function transitionTo(nextIndex, direction) {
-    if (!direction || isAnimating) return;
-
-    isAnimating = true;
-    const directionName = direction > 0 ? "next" : "previous";
-    image.classList.add(`is-leaving-${directionName}`);
-
-    setTimeout(() => {
-      index = nextIndex;
-      resetSlideAnimation();
-      image.classList.add(`is-entering-${directionName}`);
-      renderCarousel();
-      void image.offsetWidth;
-
-      const revealSlide = () => image.classList.remove(`is-entering-${directionName}`);
-      if (typeof requestAnimationFrame === "function") requestAnimationFrame(revealSlide);
-      else setTimeout(revealSlide, 0);
-
-      setTimeout(() => { isAnimating = false; }, 360);
-    }, 180);
+    if (!direction) return;
+    index = nextIndex;
+    renderCarousel();
   }
 
   function changeSlide(direction) {
@@ -170,18 +153,33 @@ function initialiseLanding() {
   next.addEventListener("click", () => changeSlide(1));
   deviceButtons.forEach((button) => button.addEventListener("click", () => setDevice(button.dataset.device)));
   languageButtons.forEach((button) => button.addEventListener("click", () => setLanguage(button.dataset.language)));
-  carouselFrame.addEventListener("touchstart", (event) => {
-    const touch = event.touches[0];
-    touchStart = { x: touch.clientX, y: touch.clientY };
-  }, { passive: true });
-  carouselFrame.addEventListener("touchend", (event) => {
-    if (!touchStart) return;
-    const touch = event.changedTouches[0];
-    const direction = getSwipeDirection(touchStart.x, touch.clientX, touchStart.y, touch.clientY);
-    touchStart = null;
-    changeSlide(direction);
-  }, { passive: true });
-  carouselFrame.addEventListener("touchcancel", () => { touchStart = null; }, { passive: true });
+  if (typeof window !== "undefined" && "PointerEvent" in window) {
+    carouselFrame.addEventListener("pointerdown", (event) => {
+      if (event.isPrimary === false) return;
+      pointerStart = { id: event.pointerId, x: event.clientX, y: event.clientY };
+      if (typeof carouselFrame.setPointerCapture === "function") carouselFrame.setPointerCapture(event.pointerId);
+    }, { passive: true });
+    carouselFrame.addEventListener("pointerup", (event) => {
+      if (!pointerStart || event.pointerId !== pointerStart.id) return;
+      const direction = getSwipeDirection(pointerStart.x, event.clientX, pointerStart.y, event.clientY);
+      pointerStart = null;
+      changeSlide(direction);
+    }, { passive: true });
+    carouselFrame.addEventListener("pointercancel", () => { pointerStart = null; }, { passive: true });
+  } else {
+    carouselFrame.addEventListener("touchstart", (event) => {
+      const touch = event.touches[0];
+      pointerStart = { x: touch.clientX, y: touch.clientY };
+    }, { passive: true });
+    carouselFrame.addEventListener("touchend", (event) => {
+      if (!pointerStart) return;
+      const touch = event.changedTouches[0];
+      const direction = getSwipeDirection(pointerStart.x, touch.clientX, pointerStart.y, touch.clientY);
+      pointerStart = null;
+      changeSlide(direction);
+    }, { passive: true });
+    carouselFrame.addEventListener("touchcancel", () => { pointerStart = null; }, { passive: true });
+  }
   document.querySelectorAll("[data-app-store]").forEach((button) => button.addEventListener("click", (event) => event.preventDefault()));
   document.querySelector("#year").textContent = new Date().getFullYear();
   renderCarousel();

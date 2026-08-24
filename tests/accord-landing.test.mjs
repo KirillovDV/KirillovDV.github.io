@@ -71,11 +71,17 @@ test("carousel changes slides only for deliberate horizontal swipes", () => {
   assert.equal(globalThis.AccordManual.getSwipeDirection(240, 150, 20, 150), 0);
 });
 
-test("carousel styles animate slides and device changes", () => {
+test("carousel uses a sliding track and pointer gestures", () => {
+  const page = readFileSync(landingPath, "utf8");
   const styles = readFileSync(join(root, "Static", "accord-manual-landing.css"), "utf8");
+  const script = readFileSync(join(root, "Static", "accord-manual.js"), "utf8");
 
+  assert.match(page, /data-carousel-track/);
   assert.match(styles, /touch-action:\s*pan-y/);
-  assert.match(styles, /is-leaving-next/);
-  assert.match(styles, /is-entering-next/);
+  assert.match(styles, /\.carousel-track/);
+  assert.match(styles, /transition:\s*transform/);
   assert.match(styles, /transition:\s*max-width/);
+  assert.match(script, /PointerEvent/);
+  assert.match(script, /pointerdown/);
+  assert.match(script, /setPointerCapture/);
 });
