@@ -10,7 +10,7 @@ test("CV is published as a bilingual page at /cv/", () => {
   assert.ok(existsSync(cvPath), "cv/index.html must be published");
 
   const page = readFileSync(cvPath, "utf8");
-  assert.match(page, /<title>Denis Kirillov — QA Lead<\/title>/);
+  assert.match(page, /<title>Denis Kirillov — Senior Fullstack QA Engineer<\/title>/);
   assert.match(page, /data-language-toggle/);
   assert.match(page, /data-language="ru"/);
   assert.match(page, /data-language="en"/);
@@ -23,11 +23,11 @@ test("CV is published as a bilingual page at /cv/", () => {
 });
 
 test("CV page offers the original document for download", () => {
-  const documentPath = join(root, "Static", "Denis-Kirillov-QA-Lead.docx");
+  const documentPath = join(root, "Static", "Denis-Kirillov-Senior-Fullstack-QA-Engineer.docx");
   const page = readFileSync(cvPath, "utf8");
 
   assert.ok(existsSync(documentPath), "the downloadable CV document must be published in Static");
-  assert.match(page, /href="\.\.\/Static\/Denis-Kirillov-QA-Lead\.docx" download data-i18n="downloadCV"/);
+  assert.match(page, /href="\.\.\/Static\/Denis-Kirillov-Senior-Fullstack-QA-Engineer\.docx" download data-i18n="downloadCV"/);
 });
 
 test("CV language controller contains complete Russian and English content", () => {
@@ -41,6 +41,16 @@ test("CV language controller contains complete Russian and English content", () 
   assert.match(script, /Leading QA Engineer/);
   assert.match(script, /data-i18n/);
   assert.match(script, /downloadCV/);
+});
+
+test("CV reflects the Senior Fullstack QA Engineer profile", () => {
+  const page = readFileSync(cvPath, "utf8");
+  const script = readFileSync(join(root, "Static", "cv.js"), "utf8");
+
+  assert.match(page, /Senior Fullstack QA Engineer/);
+  assert.match(page, /Продуктовый буткемп/);
+  assert.match(script, /Kafka, Redis/);
+  assert.match(script, /Senior Fullstack QA Engineer/);
 });
 
 test("CV uses the same Nunito accent font as the home page", () => {
