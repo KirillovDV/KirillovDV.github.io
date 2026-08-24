@@ -1,6 +1,6 @@
 const copy = {
   ru: {
-    kicker: "Резюме · Москва", role: "QA Lead / Test Manager",
+    kicker: "Резюме · Москва", role: "QA Lead / Test Manager", downloadCV: "Скачать резюме в DOCX",
     summary: "QA-инженер с 5+ годами опыта в тестировании web-, mobile- и backend-систем. Выполняю функции hands-on QA Lead: координирую работу QA, выстраиваю автоматизацию и помогаю команде управлять рисками регулярных релизов.",
     experienceTitle: "Опыт", vkPeriod: "март 2024 — настоящее время", vkRole: "Ведущий инженер по тестированию",
     vkDescription: "Внутренние CX-продукты: рабочее место оператора, обработка обращений, интеграции с внешними сервисами и ML-модули маршрутизации и фильтрации тикетов.",
@@ -21,7 +21,7 @@ const copy = {
     footer: "Открыт к профессиональным предложениям",
   },
   en: {
-    kicker: "Résumé · Moscow", role: "QA Lead / Test Manager",
+    kicker: "Résumé · Moscow", role: "QA Lead / Test Manager", downloadCV: "Download CV as DOCX",
     summary: "QA engineer with 5+ years of experience testing web, mobile, and backend systems. A hands-on QA Lead who coordinates QA work, builds automation, and helps teams manage risk across frequent releases.",
     experienceTitle: "Experience", vkPeriod: "March 2024 — present", vkRole: "Leading QA Engineer",
     vkDescription: "Internal CX products: operator workspace, request processing, integrations with external services, and ML modules for ticket routing and filtering.",

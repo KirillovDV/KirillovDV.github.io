@@ -29,6 +29,9 @@ h1 { max-width: 700px; margin-bottom: 20px; font-family: "Playfair Display", Geo
 .contact-list { display: flex; flex-wrap: wrap; gap: 9px; }
 .contact-list a { padding: 7px 12px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.55); color: #34455a; font-size: 13px; font-weight: 600; transition: border-color .2s ease, color .2s ease, transform .2s ease; }
 .contact-list a:hover, .contact-list a:focus-visible { border-color: var(--accent); color: var(--accent); outline: 0; transform: translateY(-1px); }
+.cv-download { display: inline-flex; align-items: center; gap: 9px; margin-top: 18px; padding: 10px 15px; border-radius: 999px; background: var(--ink); color: #fff; font-size: 13px; font-weight: 800; transition: background-color .2s ease, transform .2s ease; }
+.cv-download::before { content: "↓"; font-size: 17px; line-height: 1; }
+.cv-download:hover, .cv-download:focus-visible { background: var(--accent); outline: 0; transform: translateY(-1px); }
 .content-section { display: grid; grid-template-columns: minmax(145px, .32fr) 1fr; gap: clamp(35px, 7vw, 100px); padding: 52px 0; border-top: 1px solid var(--line); }
 .section-marker { display: flex; align-items: baseline; gap: 12px; }
 .section-marker h2 { margin: 0; font-size: 14px; font-weight: 800; letter-spacing: .02em; text-transform: uppercase; }

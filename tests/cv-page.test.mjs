@@ -22,6 +22,14 @@ test("CV is published as a bilingual page at /cv/", () => {
   assert.match(page, /src="\.\.\/Static\/cv\.js" defer><\/script>/);
 });
 
+test("CV page offers the original document for download", () => {
+  const documentPath = join(root, "Static", "Denis-Kirillov-QA-Lead.docx");
+  const page = readFileSync(cvPath, "utf8");
+
+  assert.ok(existsSync(documentPath), "the downloadable CV document must be published in Static");
+  assert.match(page, /href="\.\.\/Static\/Denis-Kirillov-QA-Lead\.docx" download data-i18n="downloadCV"/);
+});
+
 test("CV language controller contains complete Russian and English content", () => {
   const scriptPath = join(root, "Static", "cv.js");
   assert.ok(existsSync(scriptPath), "Static/cv.js must be published");
@@ -32,4 +40,5 @@ test("CV language controller contains complete Russian and English content", () 
   assert.match(script, /en:/);
   assert.match(script, /Leading QA Engineer/);
   assert.match(script, /data-i18n/);
+  assert.match(script, /downloadCV/);
 });
