@@ -42,3 +42,13 @@ test("CV language controller contains complete Russian and English content", () 
   assert.match(script, /data-i18n/);
   assert.match(script, /downloadCV/);
 });
+
+test("CV uses the same Nunito accent font as the home page", () => {
+  const page = readFileSync(cvPath, "utf8");
+  const styles = readFileSync(join(root, "Static", "cv.css"), "utf8");
+
+  assert.match(page, /family=Nunito/);
+  assert.match(styles, /font-family:\s*"Nunito", Arial, sans-serif/);
+  assert.doesNotMatch(page, /Playfair\+Display/);
+  assert.doesNotMatch(styles, /Playfair Display/);
+});
