@@ -35,6 +35,12 @@ test("landing language switch is shown without a redundant label", () => {
   assert.doesNotMatch(script, /language:\s*"/);
 });
 
+test("landing footer credits link to the developer website", () => {
+  const page = readFileSync(landingPath, "utf8");
+
+  assert.match(page, /<a href="https:\/\/deniskirillov\.com\/">© <span id="year"><\/span> Denis Kirillov<\/a>/);
+});
+
 test("landing omits the obsolete screenshots button and includes Safari control fallbacks", () => {
   const page = readFileSync(landingPath, "utf8");
   const styles = readFileSync(join(root, "Static", "accord-manual-landing.css"), "utf8");

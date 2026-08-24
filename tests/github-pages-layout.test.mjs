@@ -29,3 +29,10 @@ test("the home page links to Accord Manual from the social links", () => {
   assert.match(homePage, /src="\.\/Static\/accord-manual-glyph-transparent\.png"/);
   assert.match(homePage, /alt="Accord Manual"/);
 });
+
+test("the Check my CV button opens the web CV page", () => {
+  const homePage = readFileSync(join(root, "index.html"), "utf8");
+
+  assert.match(homePage, /<a style="text-decoration:none" href="\/cv\/">\s*<div class="ResumeBlock">/);
+  assert.doesNotMatch(homePage, /href="\.\/Static\/CV\.pdf" download/);
+});
