@@ -26,6 +26,15 @@ test("landing offers the supplied TestFlight build", () => {
   assert.match(page, /href="https:\/\/testflight\.apple\.com\/join\/Cy9x6aCU"/);
 });
 
+test("landing language switch is shown without a redundant label", () => {
+  const page = readFileSync(landingPath, "utf8");
+  const script = readFileSync(join(root, "Static", "accord-manual.js"), "utf8");
+
+  assert.match(page, /data-language-toggle/);
+  assert.doesNotMatch(page, /data-i18n="language"/);
+  assert.doesNotMatch(script, /language:\s*"/);
+});
+
 test("landing omits the obsolete screenshots button and includes Safari control fallbacks", () => {
   const page = readFileSync(landingPath, "utf8");
   const styles = readFileSync(join(root, "Static", "accord-manual-landing.css"), "utf8");
@@ -53,4 +62,20 @@ test("carousel changes device gallery and wraps around", () => {
   assert.equal(globalThis.AccordManual.getSlidesForDevice("ipad").length, 4);
   assert.equal(globalThis.AccordManual.getNextIndex(5, 6, 1), 0);
   assert.equal(globalThis.AccordManual.getNextIndex(0, 6, -1), 5);
+});
+
+test("carousel changes slides only for deliberate horizontal swipes", () => {
+  assert.equal(globalThis.AccordManual.getSwipeDirection(300, 200, 18, 20), 1);
+  assert.equal(globalThis.AccordManual.getSwipeDirection(100, 210, 22, 25), -1);
+  assert.equal(globalThis.AccordManual.getSwipeDirection(200, 170, 18, 20), 0);
+  assert.equal(globalThis.AccordManual.getSwipeDirection(240, 150, 20, 150), 0);
+});
+
+test("carousel styles animate slides and device changes", () => {
+  const styles = readFileSync(join(root, "Static", "accord-manual-landing.css"), "utf8");
+
+  assert.match(styles, /touch-action:\s*pan-y/);
+  assert.match(styles, /is-leaving-next/);
+  assert.match(styles, /is-entering-next/);
+  assert.match(styles, /transition:\s*max-width/);
 });

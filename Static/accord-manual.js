@@ -23,6 +23,13 @@ function getNextIndex(index, total, direction) {
   return (index + direction + total) % total;
 }
 
+function getSwipeDirection(startX, endX, startY = 0, endY = 0, threshold = 48) {
+  const horizontalDistance = endX - startX;
+  const verticalDistance = endY - startY;
+  if (Math.abs(horizontalDistance) < threshold || Math.abs(horizontalDistance) <= Math.abs(verticalDistance)) return 0;
+  return horizontalDistance < 0 ? 1 : -1;
+}
+
 const copy = {
   ru: {
     navSupport: "Поддержка", eyebrow: "Accord VII · 2003–2008", title: "Всё руководство Accord VII — в вашем кармане",
@@ -35,7 +42,7 @@ const copy = {
     featureFourTitle: "Схемы и детали", featureFourText: "Открывайте электрические схемы и каталоги деталей, переходя от изображения к нужной инструкции.",
     galleryLabel: "Интерфейс", galleryTitle: "Создано для iPhone и iPad", supportLabel: "Поддержка", supportTitle: "Нужна помощь с Accord Manual?",
     supportText: "Напишите мне, если есть вопрос по приложению или вы нашли ошибку. Для баг-репорта укажите версию приложения, iOS, устройство и шаги, после которых появилась проблема.",
-    emailButton: "Написать на почту", telegramButton: "Написать в Telegram", privacy: "Политика конфиденциальности", language: "Язык",
+    emailButton: "Написать на почту", telegramButton: "Написать в Telegram", privacy: "Политика конфиденциальности",
     previous: "Предыдущий скриншот", next: "Следующий скриншот", selectSlide: "Открыть скриншот",
   },
   en: {
@@ -49,7 +56,7 @@ const copy = {
     featureFourTitle: "Diagrams and parts", featureFourText: "Open electrical diagrams and parts catalogues, then jump directly to the relevant instruction.",
     galleryLabel: "Interface", galleryTitle: "Designed for iPhone and iPad", supportLabel: "Support", supportTitle: "Need help with Accord Manual?",
     supportText: "Email me with any app question or issue. For a bug report, include the app version, iOS version, device model, and steps that led to the problem.",
-    emailButton: "Email support", telegramButton: "Message on Telegram", privacy: "Privacy Policy", language: "Language",
+    emailButton: "Email support", telegramButton: "Message on Telegram", privacy: "Privacy Policy",
     previous: "Previous screenshot", next: "Next screenshot", selectSlide: "Open screenshot",
   },
 };
@@ -69,6 +76,8 @@ function initialiseLanding() {
   let device = "iphone";
   let index = 0;
   let language = "ru";
+  let isAnimating = false;
+  let touchStart = null;
 
   function renderCarousel() {
     const currentSlides = getSlidesForDevice(device);
@@ -83,9 +92,46 @@ function initialiseLanding() {
       dot.className = `carousel-dot${dotIndex === index ? " is-active" : ""}`;
       dot.setAttribute("aria-label", `${copy[language].selectSlide} ${dotIndex + 1}`);
       dot.setAttribute("aria-pressed", String(dotIndex === index));
-      dot.addEventListener("click", () => { index = dotIndex; renderCarousel(); });
+      dot.addEventListener("click", () => {
+        const direction = dotIndex === index ? 0 : (dotIndex > index ? 1 : -1);
+        transitionTo(dotIndex, direction);
+      });
       dots.appendChild(dot);
     });
+  }
+
+  function resetSlideAnimation() {
+    image.classList.remove("is-leaving-next");
+    image.classList.remove("is-leaving-previous");
+    image.classList.remove("is-entering-next");
+    image.classList.remove("is-entering-previous");
+  }
+
+  function transitionTo(nextIndex, direction) {
+    if (!direction || isAnimating) return;
+
+    isAnimating = true;
+    const directionName = direction > 0 ? "next" : "previous";
+    image.classList.add(`is-leaving-${directionName}`);
+
+    setTimeout(() => {
+      index = nextIndex;
+      resetSlideAnimation();
+      image.classList.add(`is-entering-${directionName}`);
+      renderCarousel();
+      void image.offsetWidth;
+
+      const revealSlide = () => image.classList.remove(`is-entering-${directionName}`);
+      if (typeof requestAnimationFrame === "function") requestAnimationFrame(revealSlide);
+      else setTimeout(revealSlide, 0);
+
+      setTimeout(() => { isAnimating = false; }, 360);
+    }, 180);
+  }
+
+  function changeSlide(direction) {
+    const nextIndex = getNextIndex(index, getSlidesForDevice(device).length, direction);
+    transitionTo(nextIndex, direction);
   }
 
   function setLanguage(nextLanguage) {
@@ -105,6 +151,7 @@ function initialiseLanding() {
   }
 
   function setDevice(nextDevice) {
+    if (nextDevice === device) return;
     device = nextDevice;
     index = 0;
     deviceButtons.forEach((button) => {
@@ -114,25 +161,33 @@ function initialiseLanding() {
     });
     carouselStage.className = `carousel-stage is-${device}`;
     carouselFrame.className = `carousel-frame is-${device}`;
+    carouselStage.classList.add("is-device-changing");
     renderCarousel();
+    setTimeout(() => carouselStage.classList.remove("is-device-changing"), 460);
   }
 
-  previous.addEventListener("click", () => {
-    index = getNextIndex(index, getSlidesForDevice(device).length, -1);
-    renderCarousel();
-  });
-  next.addEventListener("click", () => {
-    index = getNextIndex(index, getSlidesForDevice(device).length, 1);
-    renderCarousel();
-  });
+  previous.addEventListener("click", () => changeSlide(-1));
+  next.addEventListener("click", () => changeSlide(1));
   deviceButtons.forEach((button) => button.addEventListener("click", () => setDevice(button.dataset.device)));
   languageButtons.forEach((button) => button.addEventListener("click", () => setLanguage(button.dataset.language)));
+  carouselFrame.addEventListener("touchstart", (event) => {
+    const touch = event.touches[0];
+    touchStart = { x: touch.clientX, y: touch.clientY };
+  }, { passive: true });
+  carouselFrame.addEventListener("touchend", (event) => {
+    if (!touchStart) return;
+    const touch = event.changedTouches[0];
+    const direction = getSwipeDirection(touchStart.x, touch.clientX, touchStart.y, touch.clientY);
+    touchStart = null;
+    changeSlide(direction);
+  }, { passive: true });
+  carouselFrame.addEventListener("touchcancel", () => { touchStart = null; }, { passive: true });
   document.querySelectorAll("[data-app-store]").forEach((button) => button.addEventListener("click", (event) => event.preventDefault()));
   document.querySelector("#year").textContent = new Date().getFullYear();
   renderCarousel();
 }
 
-globalThis.AccordManual = { getSlidesForDevice, getNextIndex };
+globalThis.AccordManual = { getSlidesForDevice, getNextIndex, getSwipeDirection };
 
 if (typeof document !== "undefined") {
   if (document.readyState === "loading") {

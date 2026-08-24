@@ -6,7 +6,7 @@ const translations = {
     localDataTitle: "Локальные данные", localDataText: "Содержимое руководства, изображения, поисковый индекс, избранное, заметки, история чтения, состояние чек-листов, профиль автомобиля и настройки хранятся только на вашем устройстве.",
     sharingTitle: "Передача данных", sharingText: "Приложение не отправляет ваши данные разработчику и не требует подключения к сети для работы руководства. Экспорт PDF, заметок и закладок запускается только вами через системное меню «Поделиться».",
     disclaimerLabel: "Важно", disclaimerTitle: "Независимое неофициальное приложение", disclaimerText: "Accord Manual — независимое неофициальное приложение. Оно не связано с Honda, не одобрено и не поддерживается брендом Honda или его аффилированными компаниями.",
-    contactTitle: "Контакты", contactText: "Вопросы о конфиденциальности:", developer: "Разработчик: Денис Кириллов", language: "Язык",
+    contactTitle: "Контакты", contactText: "Вопросы о конфиденциальности:", developer: "Разработчик: Денис Кириллов",
   },
   en: {
     pageTitle: "Privacy Policy — Accord Manual", backToApp: "Back to app", eyebrow: "Privacy", title: "Privacy Policy",
@@ -15,7 +15,7 @@ const translations = {
     localDataTitle: "On-device data", localDataText: "Manual content, images, the search index, favourites, notes, reading history, checklist progress, vehicle profile, and settings are stored only on your device.",
     sharingTitle: "Data sharing", sharingText: "The app does not send your data to the developer and does not require a network connection for the manual to work. PDF, note, and bookmark exports are started only by you through the system Share menu.",
     disclaimerLabel: "Important", disclaimerTitle: "Independent, unofficial application", disclaimerText: "Accord Manual is an independent, unofficial application. It is not affiliated with, endorsed by, or supported by Honda or any of its affiliated companies.",
-    contactTitle: "Contact", contactText: "Privacy questions:", developer: "Developer: Denis Kirillov", language: "Language",
+    contactTitle: "Contact", contactText: "Privacy questions:", developer: "Developer: Denis Kirillov",
   },
 };
 
