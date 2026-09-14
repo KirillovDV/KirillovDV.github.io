@@ -28,6 +28,7 @@
           <p class="lede" data-i18n="lede">Accord Manual объединяет документацию, диагностику, схемы и каталоги деталей в одном быстром и понятном приложении.</p>
           <div class="hero-actions">
             <a class="button button-primary is-disabled" href="#" data-app-store aria-disabled="true" data-i18n="appStore">Скачать в App Store</a>
+            <a class="button button-rustore" href="https://www.rustore.ru/catalog/app/com.deniskirillov.accordmanual" target="_blank" rel="noopener" data-ru-store data-i18n="ruStore">Скачать в RuStore</a>
             <a class="button button-testflight" href="https://testflight.apple.com/join/Cy9x6aCU" target="_blank" rel="noopener" data-i18n="testFlightButton">Доступно в TestFlight</a>
           </div>
           <p class="availability" data-i18n="availability">Скоро в App Store</p>
@@ -44,22 +45,18 @@
       <h2 id="overview-title" data-i18n="overviewTitle">Нужная информация — без долгих поисков</h2>
       <div class="feature-grid">
         <article class="feature-card">
-          <span class="feature-number">01</span>
           <h3 data-i18n="featureOneTitle">Полная документация</h3>
           <p data-i18n="featureOneText">Разделы по обслуживанию, двигателю, трансмиссии, тормозам, электрике, кузову и другим системам Accord VII.</p>
         </article>
         <article class="feature-card">
-          <span class="feature-number">02</span>
           <h3 data-i18n="featureTwoTitle">Поиск по всем разделам</h3>
           <p data-i18n="featureTwoText">Быстро находите нужные статьи, компоненты и коды неисправностей по ключевым словам.</p>
         </article>
         <article class="feature-card">
-          <span class="feature-number">03</span>
           <h3 data-i18n="featureThreeTitle">Диагностика по шагам</h3>
           <p data-i18n="featureThreeText">Понятные сценарии для DTC-кодов и процедур ремонта помогают двигаться от причины к решению.</p>
         </article>
         <article class="feature-card">
-          <span class="feature-number">04</span>
           <h3 data-i18n="featureFourTitle">Схемы и детали</h3>
           <p data-i18n="featureFourText">Открывайте электрические схемы и каталоги деталей, переходя от изображения к нужной инструкции.</p>
         </article>
@@ -69,9 +66,15 @@
     <section class="showcase" id="screenshots" aria-labelledby="gallery-title">
       <div class="container showcase-header">
         <div>
-          <p class="section-label section-label-light" data-i18n="galleryLabel">Интерфейс</p>
-          <h2 id="gallery-title" data-i18n="galleryTitle">Создано для iPhone и iPad</h2>
+          <h2 id="gallery-title" data-i18n="galleryLabel">Интерфейс</h2>
         </div>
+        <div class="device-select" data-platform-select role="group" aria-label="Выбор платформы">
+          <button type="button" class="device-button is-active" data-platform="ios" aria-pressed="true">iOS</button>
+          <button type="button" class="device-button" data-platform="android" aria-pressed="false">Android</button>
+        </div>
+      </div>
+
+      <div class="container ios-device-select" data-ios-devices>
         <div class="device-select" data-device-select role="group" aria-label="Выбор устройства">
           <button type="button" class="device-button is-active" data-device="iphone" aria-pressed="true">iPhone</button>
           <button type="button" class="device-button" data-device="ipad" aria-pressed="false">iPad</button>

@@ -7,6 +7,12 @@ const slides = {
     { src: "../Static/accord-manual/iphone/05-catalog.jpg", ru: "Подробные схемы и каталоги деталей", en: "Detailed diagrams and parts catalogues" },
     { src: "../Static/accord-manual/iphone/06-diagrams.jpg", ru: "Связанные схемы и статьи", en: "Connected diagrams and articles" },
   ],
+  android: [
+    { src: "../Static/accord-manual/android/01-manual.png", ru: "Полное руководство по системам Accord VII", en: "Complete Accord VII manual" },
+    { src: "../Static/accord-manual/android/02-search.png", ru: "Поиск по всем разделам", en: "Search across every section" },
+    { src: "../Static/accord-manual/android/04-links.png", ru: "Переход от схемы к нужной инструкции", en: "Jump from a diagram to the right instruction" },
+    { src: "../Static/accord-manual/android/05-catalog.png", ru: "Подробные схемы и каталоги деталей", en: "Detailed diagrams and parts catalogues" },
+  ],
   ipad: [
     { src: "../Static/accord-manual/ipad/01-manual.jpg", ru: "Полное руководство на большом экране", en: "The complete manual on a larger screen" },
     { src: "../Static/accord-manual/ipad/02-search.jpg", ru: "Поиск по всем разделам", en: "Search across every section" },
@@ -34,13 +40,13 @@ const copy = {
   ru: {
     navSupport: "Поддержка", eyebrow: "Accord VII · 2003–2008", title: "Всё руководство Accord VII — в вашем кармане",
     lede: "Accord Manual объединяет документацию, диагностику, схемы и каталоги деталей в одном быстром и понятном приложении.",
-    appStore: "Скачать в App Store", testFlightButton: "Доступно в TestFlight", availability: "Скоро в App Store",
+    appStore: "Скачать в App Store", ruStore: "Скачать в RuStore", testFlightButton: "Доступно в TestFlight", availability: "Скоро в App Store",
     overviewLabel: "Возможности", overviewTitle: "Нужная информация — без долгих поисков",
     featureOneTitle: "Полная документация", featureOneText: "Разделы по обслуживанию, двигателю, трансмиссии, тормозам, электрике, кузову и другим системам Accord VII.",
     featureTwoTitle: "Поиск по всем разделам", featureTwoText: "Быстро находите нужные статьи, компоненты и коды неисправностей по ключевым словам.",
     featureThreeTitle: "Диагностика по шагам", featureThreeText: "Понятные сценарии для DTC-кодов и процедур ремонта помогают двигаться от причины к решению.",
     featureFourTitle: "Схемы и детали", featureFourText: "Открывайте электрические схемы и каталоги деталей, переходя от изображения к нужной инструкции.",
-    galleryLabel: "Интерфейс", galleryTitle: "Создано для iPhone и iPad", supportLabel: "Поддержка", supportTitle: "Нужна помощь с Accord Manual?",
+    galleryLabel: "Интерфейс", supportLabel: "Поддержка", supportTitle: "Нужна помощь с Accord Manual?",
     supportText: "Напишите мне, если есть вопрос по приложению или вы нашли ошибку. Для баг-репорта укажите версию приложения, iOS, устройство и шаги, после которых появилась проблема.",
     emailButton: "Написать на почту", telegramButton: "Написать в Telegram", privacy: "Политика конфиденциальности",
     previous: "Предыдущий скриншот", next: "Следующий скриншот", selectSlide: "Открыть скриншот",
@@ -48,13 +54,13 @@ const copy = {
   en: {
     navSupport: "Support", eyebrow: "Accord VII · 2003–2008", title: "Your Accord VII manual — always within reach",
     lede: "Accord Manual brings documentation, diagnostics, diagrams, and parts catalogues together in one fast, clear app.",
-    appStore: "Download on the App Store", testFlightButton: "Available on TestFlight", availability: "Coming soon to the App Store",
+    appStore: "Download on the App Store", ruStore: "Download on RuStore", testFlightButton: "Available on TestFlight", availability: "Coming soon to the App Store",
     overviewLabel: "Features", overviewTitle: "The information you need, without the search",
     featureOneTitle: "Complete documentation", featureOneText: "Explore maintenance, engine, transmission, brakes, electrics, bodywork, and other Accord VII systems.",
     featureTwoTitle: "Search every section", featureTwoText: "Find the right article, component, or diagnostic trouble code with a simple keyword search.",
     featureThreeTitle: "Guided diagnostics", featureThreeText: "Clear DTC and repair flows help you move from the symptom to the right next step.",
     featureFourTitle: "Diagrams and parts", featureFourText: "Open electrical diagrams and parts catalogues, then jump directly to the relevant instruction.",
-    galleryLabel: "Interface", galleryTitle: "Designed for iPhone and iPad", supportLabel: "Support", supportTitle: "Need help with Accord Manual?",
+    galleryLabel: "Interface", supportLabel: "Support", supportTitle: "Need help with Accord Manual?",
     supportText: "Email me with any app question or issue. For a bug report, include the app version, iOS version, device model, and steps that led to the problem.",
     emailButton: "Email support", telegramButton: "Message on Telegram", privacy: "Privacy Policy",
     previous: "Previous screenshot", next: "Next screenshot", selectSlide: "Open screenshot",
@@ -70,10 +76,13 @@ function initialiseLanding() {
   const previous = document.querySelector("[data-carousel-previous]");
   const next = document.querySelector("[data-carousel-next]");
   const deviceButtons = document.querySelectorAll("[data-device-select] button");
+  const platformButtons = document.querySelectorAll("[data-platform]");
+  const iosDevices = document.querySelector("[data-ios-devices]");
   const languageButtons = document.querySelectorAll("[data-language]");
   const carouselStage = document.querySelector("[data-carousel-stage]");
   const carouselFrame = document.querySelector("[data-carousel-frame]");
   let device = "iphone";
+  let iosDevice = "iphone";
   let index = 0;
   let language = "ru";
   let pointerStart = null;
@@ -136,6 +145,8 @@ function initialiseLanding() {
   function setDevice(nextDevice) {
     if (nextDevice === device) return;
     device = nextDevice;
+    if (device !== "android") iosDevice = device;
+    pointerStart = null;
     index = 0;
     deviceButtons.forEach((button) => {
       const selected = button.dataset.device === device;
@@ -148,6 +159,17 @@ function initialiseLanding() {
     renderCarousel();
     setTimeout(() => carouselStage.classList.remove("is-device-changing"), 460);
   }
+
+  platformButtons.forEach((button) => button.addEventListener("click", () => {
+    const platform = button.dataset.platform;
+    platformButtons.forEach((option) => {
+      const selected = option.dataset.platform === platform;
+      option.classList.toggle("is-active", selected);
+      option.setAttribute("aria-pressed", String(selected));
+    });
+    iosDevices.hidden = platform !== "ios";
+    setDevice(platform === "android" ? "android" : iosDevice);
+  }));
 
   previous.addEventListener("click", () => changeSlide(-1));
   next.addEventListener("click", () => changeSlide(1));

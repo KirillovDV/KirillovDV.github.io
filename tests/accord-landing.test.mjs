@@ -63,6 +63,21 @@ test("landing copy does not mention Honda", () => {
   assert.doesNotMatch(landingFiles, /honda/i);
 });
 
+test("landing is dedicated to Accord VII only", () => {
+  const page = readFileSync(landingPath, "utf8");
+  const script = readFileSync(join(root, "Static", "accord-manual.js"), "utf8");
+
+  assert.match(page, /Accord VII/);
+  assert.doesNotMatch(page, /Accord VIII/);
+  assert.doesNotMatch(script, /Accord VIII/);
+});
+
+test("feature cards do not show decorative sequence numbers", () => {
+  const page = readFileSync(landingPath, "utf8");
+
+  assert.doesNotMatch(page, /class="feature-number"/);
+});
+
 test("carousel changes device gallery and wraps around", () => {
   assert.equal(globalThis.AccordManual.getSlidesForDevice("iphone").length, 6);
   assert.equal(globalThis.AccordManual.getSlidesForDevice("ipad").length, 4);
