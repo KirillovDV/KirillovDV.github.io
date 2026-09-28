@@ -36,3 +36,22 @@ test("the Check my CV button opens the web CV page", () => {
   assert.match(homePage, /<a style="text-decoration:none" href="\/cv\/">\s*<div class="ResumeBlock">/);
   assert.doesNotMatch(homePage, /href="\.\/Static\/CV\.pdf" download/);
 });
+
+test("the BST2251 schedule page publishes a downloadable calendar", () => {
+  const schedulePagePath = join(root, "schedule", "index.html");
+  const calendarPath = join(root, "schedule", "BST2251-schedule.ics");
+  const homePage = readFileSync(join(root, "index.html"), "utf8");
+
+  assert.ok(existsSync(schedulePagePath), "schedule/index.html must be published");
+  assert.ok(existsSync(calendarPath), "the schedule calendar must be published");
+  assert.match(homePage, /href="\/schedule\/"/);
+
+  const schedulePage = readFileSync(schedulePagePath, "utf8");
+  assert.match(schedulePage, /href="\.\/BST2251-schedule\.ics"/);
+  assert.match(schedulePage, /download="БСТ2251_расписание\.ics"/);
+
+  const calendar = readFileSync(calendarPath, "utf8");
+  assert.match(calendar, /^BEGIN:VCALENDAR/m);
+  assert.match(calendar, /X-WR-CALNAME:БСТ2251/);
+  assert.equal((calendar.match(/^BEGIN:VEVENT$/gm) || []).length, 18);
+});

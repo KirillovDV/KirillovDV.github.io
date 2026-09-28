@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="ru" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#3c287b">
+  <title>Расписание БСТ2251 — МТУСИ</title>
+  <script>document.documentElement.className="js";</script>
+  <style>
+    :root {
+      --ink: #171329;
+      --violet: #3c287b;
+      --violet-2: #5740a0;
+      --lavender: #ece9f7;
+      --lilac: #cbc3e5;
+      --paper: #f7f7fb;
+      --white: #fff;
+      --mint: #dff6ee;
+      --mint-ink: #146149;
+      --line: #e4e1ed;
+      --muted: #706a82;
+      --shadow: 0 18px 55px rgba(40, 26, 83, .10);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button, input, a { font: inherit; }
+    a { color: inherit; }
+
+    .topbar {
+      min-height: 58px;
+      color: #fff;
+      background: var(--violet);
+    }
+
+    .topbar__inner, .nav, .hero__inner, main, .footer__inner {
+      width: min(1180px, calc(100% - 40px));
+      margin-inline: auto;
+    }
+
+    .topbar__inner {
+      min-height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      font-size: 14px;
+    }
+
+    .city { display: flex; align-items: center; gap: 9px; font-weight: 700; }
+    .city svg, .top-meta svg { width: 20px; height: 20px; }
+    .top-meta { display: flex; align-items: center; gap: 24px; color: #e9e5f5; }
+
+    .nav {
+      min-height: 112px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 13px;
+      color: var(--violet);
+      text-decoration: none;
+      font-size: 31px;
+      font-weight: 800;
+      letter-spacing: .02em;
+    }
+
+    .brand__mark {
+      width: 52px;
+      aspect-ratio: 1;
+      border: 5px solid currentColor;
+      border-radius: 17px;
+      transform: rotate(45deg);
+      position: relative;
+    }
+
+    .brand__mark::after {
+      content: "";
+      position: absolute;
+      inset: 5px;
+      border: 2px solid #b8afd5;
+      border-radius: 10px;
+    }
+
+    .nav__right { display: flex; align-items: center; gap: 10px; }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 0 16px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--white);
+      color: var(--violet);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .hero { position: relative; overflow: hidden; background: linear-gradient(135deg, #4a3292 0%, #2d1e69 72%); color: #fff; }
+    .hero::before, .hero::after {
+      content: "";
+      position: absolute;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 50%;
+    }
+    .hero::before { width: 430px; height: 430px; right: -80px; top: -210px; box-shadow: 0 0 0 58px rgba(255,255,255,.035), 0 0 0 116px rgba(255,255,255,.025); }
+    .hero::after { width: 170px; height: 170px; left: 6%; bottom: -120px; box-shadow: 0 0 0 35px rgba(255,255,255,.04); }
+
+    .hero__inner {
+      position: relative;
+      z-index: 1;
+      padding: 58px 0 66px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 40px;
+      align-items: end;
+    }
+
+    .eyebrow { margin: 0 0 14px; color: #d7d0ef; font-size: 13px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+    h1 { margin: 0; max-width: 760px; font-size: clamp(43px, 7vw, 82px); line-height: .98; letter-spacing: -.055em; }
+    .hero__lead { max-width: 650px; margin: 22px 0 0; color: #e5e0f5; font-size: clamp(17px, 2vw, 21px); line-height: 1.5; }
+
+    .hero__stats { display: grid; grid-template-columns: repeat(2, minmax(140px, 1fr)); gap: 10px; }
+    .stat { min-width: 150px; padding: 18px; border: 1px solid rgba(255,255,255,.17); border-radius: 22px; background: rgba(255,255,255,.1); backdrop-filter: blur(12px); }
+    .stat strong { display: block; font-size: 26px; line-height: 1; }
+    .stat span { display: block; margin-top: 8px; color: #d8d2eb; font-size: 13px; }
+
+    main { padding: 36px 0 80px; }
+    .toolbar {
+      display: none;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: center;
+      margin-bottom: 26px;
+    }
+    .js .toolbar { display: grid; }
+    .is-hidden { display: none !important; }
+
+    .search {
+      position: relative;
+      display: flex;
+      align-items: center;
+      max-width: 520px;
+    }
+    .search svg { position: absolute; left: 17px; width: 21px; color: var(--violet); pointer-events: none; }
+    .search input {
+      width: 100%;
+      height: 52px;
+      padding: 0 18px 0 50px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+      color: var(--ink);
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .search input:focus { border-color: var(--violet-2); box-shadow: 0 0 0 4px rgba(87,64,160,.10); }
+
+    .filters { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+    .filter {
+      min-height: 42px;
+      padding: 0 15px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--muted);
+      cursor: pointer;
+      font-weight: 700;
+      transition: .2s;
+    }
+    .filter:hover, .filter[aria-pressed="true"] { border-color: var(--violet); background: var(--violet); color: #fff; }
+
+    .date-strip {
+      display: flex;
+      gap: 9px;
+      padding: 0 0 20px;
+      overflow-x: auto;
+      scrollbar-width: thin;
+    }
+    .date-chip {
+      flex: 0 0 auto;
+      min-width: 94px;
+      padding: 11px 14px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+      color: var(--violet);
+      text-decoration: none;
+      text-align: left;
+    }
+    .date-chip small { display: block; color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .09em; }
+    .date-chip strong { display: block; margin-top: 3px; font-size: 17px; }
+
+    .schedule { display: grid; gap: 22px; }
+    .day {
+      display: grid;
+      grid-template-columns: 190px 1fr;
+      gap: 26px;
+      padding: 26px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: var(--white);
+      box-shadow: var(--shadow);
+      scroll-margin-top: 20px;
+    }
+
+    .day__date { padding: 6px 8px; }
+    .day__date strong { display: block; color: var(--violet); font-size: 60px; line-height: .92; letter-spacing: -.06em; }
+    .day__date span { display: block; margin-top: 10px; font-size: 17px; font-weight: 800; }
+    .day__date small { display: block; margin-top: 5px; color: var(--muted); }
+    .day__count { display: inline-flex !important; margin-top: 16px !important; padding: 7px 10px; border-radius: 999px; background: var(--lavender); color: var(--violet) !important; font-size: 12px; font-weight: 800; }
+
+    .lessons { display: grid; gap: 10px; }
+    .lesson {
+      position: relative;
+      display: grid;
+      grid-template-columns: 112px minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: center;
+      min-height: 114px;
+      padding: 18px 18px 18px 22px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: #fcfcfe;
+      overflow: hidden;
+    }
+    .lesson::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 5px; background: var(--violet-2); }
+    .lesson.practice::before { background: #25a37d; }
+    .time { font-variant-numeric: tabular-nums; }
+    .time strong { display: block; color: var(--violet); font-size: 20px; }
+    .time span { display: block; margin-top: 5px; color: var(--muted); font-size: 13px; }
+    .lesson h3 { margin: 0; font-size: 17px; line-height: 1.32; }
+    .meta { display: flex; flex-wrap: wrap; gap: 7px 14px; margin-top: 10px; color: var(--muted); font-size: 13px; }
+    .meta span { display: inline-flex; align-items: center; gap: 6px; }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--lilac); }
+    .badge { align-self: start; padding: 8px 11px; border-radius: 10px; background: var(--lavender); color: var(--violet); font-size: 12px; font-weight: 800; white-space: nowrap; }
+    .practice .badge { background: var(--mint); color: var(--mint-ink); }
+
+    .empty { display: none; padding: 64px 24px; border: 1px dashed #c7c1d7; border-radius: 26px; text-align: center; color: var(--muted); }
+    .empty strong { display: block; color: var(--violet); font-size: 22px; margin-bottom: 6px; }
+
+    .download {
+      margin-top: 30px;
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: center;
+      padding: 27px 30px;
+      border-radius: 26px;
+      color: #fff;
+      background: var(--violet);
+    }
+    .download h2 { margin: 0; font-size: 24px; }
+    .download p { margin: 7px 0 0; color: #d8d2eb; }
+    .download__actions { display: flex; flex-wrap: wrap; gap: 9px; }
+    .button { display: inline-flex; justify-content: center; align-items: center; min-height: 46px; padding: 0 17px; border: 1px solid rgba(255,255,255,.25); border-radius: 13px; background: #fff; color: var(--violet); text-decoration: none; font-weight: 800; cursor: pointer; }
+    .button--ghost { background: transparent; color: #fff; }
+
+    footer { border-top: 1px solid var(--line); background: #fff; }
+    .footer__inner { min-height: 94px; display: flex; align-items: center; justify-content: space-between; gap: 20px; color: var(--muted); font-size: 13px; }
+    .footer__mark { color: var(--violet); font-weight: 800; }
+
+    @media (max-width: 850px) {
+      .nav { min-height: 88px; }
+      .brand { font-size: 24px; }
+      .brand__mark { width: 42px; border-width: 4px; }
+      .nav__right .pill:first-child { display: none; }
+      .hero__inner { grid-template-columns: 1fr; }
+      .hero__stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .toolbar { grid-template-columns: 1fr; }
+      .search { max-width: none; }
+      .filters { justify-content: flex-start; }
+      .day { grid-template-columns: 1fr; gap: 14px; }
+      .day__date { display: grid; grid-template-columns: auto 1fr; gap: 0 15px; align-items: center; }
+      .day__date strong { grid-row: span 2; font-size: 48px; }
+      .day__date span, .day__date small { margin: 0; }
+      .day__count { grid-column: 1 / -1; width: fit-content; }
+      .lesson { grid-template-columns: 100px minmax(0, 1fr); }
+      .badge { grid-column: 2; justify-self: start; }
+      .download { align-items: flex-start; flex-direction: column; }
+    }
+
+    @media (max-width: 560px) {
+      .topbar__inner, .nav, .hero__inner, main, .footer__inner { width: min(100% - 24px, 1180px); }
+      .top-meta span { display: none; }
+      .nav__right .pill { padding-inline: 12px; }
+      .hero__inner { padding: 42px 0 48px; }
+      .hero__stats { grid-template-columns: 1fr 1fr; }
+      .stat { min-width: 0; }
+      main { padding-top: 24px; }
+      .day { padding: 17px; border-radius: 22px; }
+      .lesson { grid-template-columns: 1fr; gap: 10px; padding: 18px; }
+      .time { display: flex; align-items: baseline; gap: 7px; }
+      .time span { margin: 0; }
+      .badge { grid-column: 1; }
+      .download { padding: 23px; }
+      .download__actions, .button { width: 100%; }
+      .footer__inner { align-items: flex-start; flex-direction: column; justify-content: center; padding-block: 24px; }
+    }
+
+    @media print {
+      .topbar, .nav__right, .toolbar, .date-strip, .download, footer { display: none !important; }
+      .nav { min-height: 70px; }
+      .hero { color: #000; background: #fff; border-block: 2px solid #3c287b; }
+      .hero__inner { padding: 25px 0; grid-template-columns: 1fr auto; }
+      .hero__lead, .eyebrow { color: #333; }
+      .hero__stats { display: none; }
+      h1 { font-size: 48px; }
+      main { padding: 20px 0; }
+      .day { break-inside: avoid; box-shadow: none; padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="topbar">
+      <div class="topbar__inner">
+        <div class="city">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          Москва
+        </div>
+        <div class="top-meta">
+          <span>Центр заочного обучения</span>
+          <span>Europe/Moscow · UTC+3</span>
+        </div>
+      </div>
+    </div>
+    <nav class="nav" aria-label="Основная навигация">
+      <a class="brand" href="#top" aria-label="МТУСИ — к началу страницы"><span class="brand__mark" aria-hidden="true"></span><span>МТУСИ</span></a>
+      <div class="nav__right">
+        <a class="pill" href="#schedule">Расписание занятий</a>
+        <a class="pill" href="./BST2251-schedule.ics" download="БСТ2251_расписание.ics">Скачать .ics</a>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero" id="top">
+    <div class="hero__inner">
+      <div>
+        <p class="eyebrow">Расписание занятий · ЦЗОПБ</p>
+        <h1>Группа БСТ2251</h1>
+        <p class="hero__lead">Учебные занятия с 5 по 14 октября 2026 года. Все встречи проходят дистанционно.</p>
+      </div>
+      <div class="hero__stats" aria-label="Краткая статистика">
+        <div class="stat"><strong>18</strong><span>занятий</span></div>
+        <div class="stat"><strong>8</strong><span>учебных дней</span></div>
+      </div>
+    </div>
+  </section>
+
+  <main id="schedule">
+    <div class="toolbar">
+      <label class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <input id="search" type="search" placeholder="Предмет или преподаватель" aria-label="Поиск по расписанию">
+      </label>
+      <div class="filters" aria-label="Фильтр типа занятия">
+        <button class="filter" data-filter="all" aria-pressed="true">Все занятия</button>
+        <button class="filter" data-filter="lecture" aria-pressed="false">Лекции</button>
+        <button class="filter" data-filter="practice" aria-pressed="false">Практика</button>
+      </div>
+    </div>
+
+    <nav class="date-strip" id="date-strip" aria-label="Переход к дате">
+      <a class="date-chip" href="#day-2026-10-05"><small>пн</small><strong>5 октября</strong></a>
+      <a class="date-chip" href="#day-2026-10-06"><small>вт</small><strong>6 октября</strong></a>
+      <a class="date-chip" href="#day-2026-10-07"><small>ср</small><strong>7 октября</strong></a>
+      <a class="date-chip" href="#day-2026-10-08"><small>чт</small><strong>8 октября</strong></a>
+      <a class="date-chip" href="#day-2026-10-09"><small>пт</small><strong>9 октября</strong></a>
+      <a class="date-chip" href="#day-2026-10-12"><small>пн</small><strong>12 октября</strong></a>
+      <a class="date-chip" href="#day-2026-10-13"><small>вт</small><strong>13 октября</strong></a>
+      <a class="date-chip" href="#day-2026-10-14"><small>ср</small><strong>14 октября</strong></a>
+    </nav>
+    <div class="schedule" id="schedule-list">
+      <section class="day" id="day-2026-10-05">
+        <header class="day__date"><strong>5</strong><span>понедельник</span><small>октября 2026</small><small class="day__count" data-total="2">2 занятия</small></header>
+        <div class="lessons">
+          <article class="lesson lecture" data-type="lecture" data-search="технологии и средства облачных сервисов гадасин д. в.">
+            <div class="time"><strong>11:15</strong><span>до 12:45</span></div><div><h3>Технологии и средства облачных сервисов</h3><div class="meta"><span><i class="dot"></i>Гадасин Д. В.</span><span><i class="dot"></i>2-я пара</span><span><i class="dot"></i>Дистанционно</span></div></div><span class="badge">Лекция</span>
+          </article>
+          <article class="lesson lecture" data-type="lecture" data-search="технологии и средства облачных сервисов гадасин д. в.">
+            <div class="time"><strong>13:00</strong><span>до 14:30</span></div><div><h3>Технологии и средства облачных сервисов</h3><div class="meta"><span><i class="dot"></i>Гадасин Д. В.</span><span><i class="dot"></i>3-я пара</span><span><i class="dot"></i>Дистанционно</span></div></div><span class="badge">Лекция</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="day" id="day-2026-10-06">
+        <header class="day__date"><strong>6</strong><span>вторник</span><small>октября 2026</small><small class="day__count" data-total="4">4 занятия</small></header>
+        <div class="lessons">
+          <article class="lesson lecture" data-type="lecture" data-search="мультимедийные информационные системы гадасин д. в.">
+            <div class="time"><strong>11:15</strong><span>до 12:45</span></div><div><h3>Мультимедийные информационные системы</h3><div class="meta"><span><i class="dot"></i>Гадасин Д. В.</span><span><i class="dot"></i>2-я пара</span><span><i class="dot"></i>Дистанционно</span></div></div><span class="badge">Лекция</span>
+          </article>
+          <article class="lesson lecture" data-type="lecture" data-search="мультимедийные информационные системы гадасин д. в.">
+            <div class="time"><strong>13:00</strong><span>до 14:30</span></div><div><h3>Мультимедийные информационные системы</h3><div class="meta"><span><i class="dot"></i>Гадасин Д. В.</span><span><i class="dot"></i>3-я пара</span><span><i class="dot"></i>Дистанционно</span></div></div><span class="badge">Лекция</span>
+          </article>
+          <article class="lesson lecture" data-type="lecture" data-search="программно-конфигурируемая архитектура приложений и инфраструктуры докучаев в. а.">
+            <div class="time"><strong>15:10</strong><span>до 16:40</span></div><div><h3>Программно-конфигурируемая архитектура приложений и инфраструктуры</h3><div class="meta"><span><i class="dot"></i>Докучаев В. А.</span><span><i class="dot"></i>4-я пара</span><span><i class="dot"></i>Дистанционно</span></div></div><span class="badge">Лекция</span>
+          </article>
+          <article class="lesson lecture" data-type="lecture" data-search="программно-конфигурируемая архитектура приложений и инфраструктуры докучаев в. а.">
+            <div class="time"><strong>16:55</strong><span>до 18:25</span></div><div><h3>Программно-конфигурируемая архитектура приложений и инфраструктуры</h3><div class="meta"><span><i class="dot"></i>Докучаев В. А.</span><span><i class="dot"></i>5-я пара</span><span><i class="dot"></i>Дистанционно</span></div></div><span class="badge">Лекция</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="day" id="day-2026-10-07">
+        <header class="day__date"><strong>7</strong><span>среда</span><small>октября 2026</small><small class="day__count" data-total="4">4 занятия</small></header>
+        <div class="lessons">
+          <article class="lesson lecture" data-type="lecture" data-search="технологии и средства облачных сервисов гадасин д. в."><div class="time"><strong>11:15</strong><span>до 12:45</span></div><div><h3>Технологии и средства облачных сервисов</h3><div class="meta"><span><i class="dot"></i>Гадасин Д. В.</span><span><i class="dot"></i>2-я пара</span><span><i class="dot"></i>Дистанционно</span></div></div><span class="badge">Лекция</span></article>
+          <article class="lesson lecture" data-type="lecture" data-search="технологии и средства облачных сервисов гадасин д. в."><div class="time"><strong>13:00</strong><span>до 14:30</span></div><div><h3>Технологии и средства облачных сервисов</h3><div class="meta"><span><i class="dot"></i>Гадасин Д. В.</span><span><i class="dot"></i>3-я пара</span><span><i class="dot"></i>Дистанционно</span></div></div><span class="badge">Лекция</span></article>
+          <article class="lesson lecture" data-type="lecture" data-search="программно-конфигурируемая архитектура приложений и инфраструктуры докучаев в. а."><div class="time"><strong>15:10</strong><span>до 16:40</span></div><div><h3>Программно-конфигурируемая архитектура приложений и инфраструктуры</h3><div class="meta"><span><i class="dot"></i>Докучаев В. А.</span><span><i class="dot"></i>4-я пара</span><span><i class="dot"></i>Дистанционно</span></div></div><span class="badge">Лекция</span></article>
+          <article class="lesson lecture" data-type="lecture" data-search="управление ит-проектами гнездова ю. в."><div class="time"><strong>16:55</strong><span>до 18:25</span></div><div><h3>Управление ИТ-проектами</h3><div class="meta"><span><i class="dot"></i>Гнездова Ю. В.</span><span><i class="dot"></i>5-я пара</span><span><i class="dot"></i>Дистанционно</span></div></div><span class="badge">Лекция</span></article>
+        </div>
+      </section>
+
+      <section class="day" id="day-2026-10-08">
+        <header class="day__date"><strong>8</strong><span>четверг</span><small>октября 2026</small><small class="day__count" data-total="1">1 занятие</small></header>
+        <div class="lessons"><article class="lesson practice" data-type="practice" data-search="технологии и средства облачных сервисов вакурин и. с."><div class="time"><strong>09:30</strong><span>до 11:00</span></div><div><h3>Технологии и средства облачных сервисов</h3><div class="meta"><span><i class="dot"></i>Вакурин И. С.</span><span><i class="dot"></i>1-я пара</span><span><i class="dot"></i>Дистанционно</span></div></div><span class="badge">Практика</span></article></div>
+      </section>
+
+      <section class="day" id="day-2026-10-09">
+        <header class="day__date"><strong>9</strong><span>пятница</span><small>октября 2026</small><small class="day__count" data-total="4">4 занятия</small></header>
+        <div class="lessons">
+          <article class="lesson lecture" data-type="lecture" data-search="управление ит-проектами гнездова ю. в."><div class="time"><strong>13:00</strong><span>до 14:30</span></div><div><h3>Управление ИТ-проектами</h3><div class="meta"><span><i class="dot"></i>Гнездова Ю. В.</span><span><i class="dot"></i>3-я пара</span><span><i class="dot"></i>Дистанционно</span></div></div><span class="badge">Лекция</span></article>
+          <article class="lesson lecture" data-type="lecture" data-search="управление ит-проектами гнездова ю. в."><div class="time"><strong>15:10</strong><span>до 16:40</span></div><div><h3>Управление ИТ-проектами</h3><div class="meta"><span><i class="dot"></i>Гнездова Ю. В.</span><span><i class="dot"></i>4-я пара</span><span><i class="dot"></i>Дистанционно</span></div></div><span class="badge">Лекция</span></article>
+          <article class="lesson lecture" data-type="lecture" data-search="безопасность жизнедеятельности замышляев в. и."><div class="time"><strong>16:55</strong><span>до 18:25</span></div><div><h3>Безопасность жизнедеятельности</h3><div class="meta"><span><i class="dot"></i>Замышляев В. И.</span><span><i class="dot"></i>5-я пара</span><span><i class="dot"></i>Дистанционно</span></div></div><span class="badge">Лекция</span></article>
+          <article class="lesson lecture" data-type="lecture" data-search="безопасность жизнедеятельности замышляев в. и."><div class="time"><strong>18:40</strong><span>до 20:10</span></div><div><h3>Безопасность жизнедеятельности</h3><div class="meta"><span><i class="dot"></i>Замышляев В. И.</span><span><i class="dot"></i>6-я пара</span><span><i class="dot"></i>Дистанционно</span></div></div><span class="badge">Лекция</span></article>
+        </div>
+      </section>
+
+      <section class="day" id="day-2026-10-12">
+        <header class="day__date"><strong>12</strong><span>понедельник</span><small>октября 2026</small><small class="day__count" data-total="1">1 занятие</small></header>
+        <div class="lessons"><article class="lesson practice" data-type="practice" data-search="мультимедийные информационные системы палибза с. а."><div class="time"><strong>09:30</strong><span>до 11:00</span></div><div><h3>Мультимедийные информационные системы</h3><div class="meta"><span><i class="dot"></i>Палибза С. А.</span><span><i class="dot"></i>1-я пара</span><span><i class="dot"></i>Дистанционно</span></div></div><span class="badge">Практика</span></article></div>
+      </section>
+
+      <section class="day" id="day-2026-10-13">
+        <header class="day__date"><strong>13</strong><span>вторник</span><small>октября 2026</small><small class="day__count" data-total="1">1 занятие</small></header>
+        <div class="lessons"><article class="lesson practice" data-type="practice" data-search="программно-конфигурируемая архитектура приложений и инфраструктуры маклачкова в. в."><div class="time"><strong>09:30</strong><span>до 11:00</span></div><div><h3>Программно-конфигурируемая архитектура приложений и инфраструктуры</h3><div class="meta"><span><i class="dot"></i>Маклачкова В. В.</span><span><i class="dot"></i>1-я пара</span><span><i class="dot"></i>Дистанционно</span></div></div><span class="badge">Практика</span></article></div>
+      </section>
+
+      <section class="day" id="day-2026-10-14">
+        <header class="day__date"><strong>14</strong><span>среда</span><small>октября 2026</small><small class="day__count" data-total="1">1 занятие</small></header>
+        <div class="lessons"><article class="lesson practice" data-type="practice" data-search="управление ит-проектами гнездова ю. в."><div class="time"><strong>16:55</strong><span>до 18:25</span></div><div><h3>Управление ИТ-проектами</h3><div class="meta"><span><i class="dot"></i>Гнездова Ю. В.</span><span><i class="dot"></i>5-я пара</span><span><i class="dot"></i>Дистанционно</span></div></div><span class="badge">Практика</span></article></div>
+      </section>
+    </div>
+    <div class="empty" id="empty"><strong>Ничего не найдено</strong>Попробуйте изменить запрос или выбрать другой фильтр.</div>
+
+    <section class="download">
+      <div>
+        <h2>Добавить расписание в календарь</h2>
+        <p>Скачайте файл со всеми 18 занятиями или сохраните страницу как PDF.</p>
+      </div>
+      <div class="download__actions">
+        <a class="button" href="./BST2251-schedule.ics" download="БСТ2251_расписание.ics">Скачать .ics</a>
+        <button class="button button--ghost" type="button" onclick="window.print()">Печать / PDF</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer__inner">
+      <span><span class="footer__mark">БСТ2251</span> · учебный календарь</span>
+      <span>Сформировано по расписанию ЦЗОПБ · октябрь 2026</span>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var filter = "all";
+      var search = document.getElementById("search");
+      var buttons = document.querySelectorAll(".filter");
+      var lessons = document.querySelectorAll(".lesson");
+      var days = document.querySelectorAll(".day");
+      var empty = document.getElementById("empty");
+
+      function wordForm(count) {
+        return count === 1 ? "занятие" : "занятия";
+      }
+
+      function update() {
+        var query = (search.value || "").toLowerCase().replace(/^\s+|\s+$/g, "");
+        var totalVisible = 0;
+        var i, j, item, day, dayLessons, visibleInDay, matches;
+
+        for (i = 0; i < lessons.length; i += 1) {
+          item = lessons[i];
+          matches = (filter === "all" || item.getAttribute("data-type") === filter) &&
+            (!query || item.getAttribute("data-search").indexOf(query) !== -1);
+          item.className = item.className.replace(/\s*is-hidden/g, "") + (matches ? "" : " is-hidden");
+          if (matches) { totalVisible += 1; }
+        }
+
+        for (i = 0; i < days.length; i += 1) {
+          day = days[i];
+          dayLessons = day.querySelectorAll(".lesson");
+          visibleInDay = 0;
+          for (j = 0; j < dayLessons.length; j += 1) {
+            if (dayLessons[j].className.indexOf("is-hidden") === -1) { visibleInDay += 1; }
+          }
+          day.className = day.className.replace(/\s*is-hidden/g, "") + (visibleInDay ? "" : " is-hidden");
+          if (visibleInDay) {
+            day.querySelector(".day__count").textContent = visibleInDay + " " + wordForm(visibleInDay);
+          }
+        }
+        empty.style.display = totalVisible ? "none" : "block";
+      }
+
+      search.addEventListener("input", update, false);
+      for (var i = 0; i < buttons.length; i += 1) {
+        buttons[i].addEventListener("click", function () {
+          filter = this.getAttribute("data-filter");
+          for (var j = 0; j < buttons.length; j += 1) {
+            buttons[j].setAttribute("aria-pressed", buttons[j] === this ? "true" : "false");
+          }
+          update();
+        }, false);
+      }
+    }());
+  </script>
+</body>
+</html>
