@@ -49,9 +49,23 @@ test("the BST2251 schedule page publishes a downloadable calendar", () => {
   const schedulePage = readFileSync(schedulePagePath, "utf8");
   assert.match(schedulePage, /href="\.\/BST2251-schedule\.ics"/);
   assert.match(schedulePage, /download="БСТ2251_расписание\.ics"/);
+  assert.equal((schedulePage.match(/class="lesson lecture transferred"/g) || []).length, 6);
+  assert.equal((schedulePage.match(/Новое время/g) || []).length, 6);
+  assert.equal((schedulePage.match(/Перенос с/g) || []).length, 6);
+
+  const lessonTimes = (date) => {
+    const section = schedulePage.match(new RegExp(`<section class="day" id="day-${date}">([\\s\\S]*?)</section>`))[1];
+    return [...section.matchAll(/<strong>(\d{2}:\d{2})<\/strong>/g)].map((match) => match[1]);
+  };
+  assert.deepEqual(lessonTimes("2026-10-05"), ["18:40", "20:25"]);
+  assert.deepEqual(lessonTimes("2026-10-06"), ["15:10", "16:55", "18:40", "20:25"]);
+  assert.deepEqual(lessonTimes("2026-10-07"), ["15:10", "16:55", "18:40", "20:25"]);
 
   const calendar = readFileSync(calendarPath, "utf8");
   assert.match(calendar, /^BEGIN:VCALENDAR/m);
   assert.match(calendar, /X-WR-CALNAME:БСТ2251/);
   assert.equal((calendar.match(/^BEGIN:VEVENT$/gm) || []).length, 18);
+  assert.equal((calendar.match(/\\nПеренос: ранее/g) || []).length, 6);
+  assert.doesNotMatch(calendar, /DTSTART;TZID=Europe\/Moscow:2026100[567]T111500/);
+  assert.doesNotMatch(calendar, /DTSTART;TZID=Europe\/Moscow:2026100[567]T130000/);
 });

@@ -17,6 +17,8 @@
       --white: #fff;
       --mint: #dff6ee;
       --mint-ink: #146149;
+      --orange: #a94d09;
+      --orange-soft: #fff0dd;
       --line: #e4e1ed;
       --muted: #706a82;
       --shadow: 0 18px 55px rgba(40, 26, 83, .10);
@@ -240,9 +242,12 @@
     }
     .lesson::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 5px; background: var(--violet-2); }
     .lesson.practice::before { background: #25a37d; }
+    .lesson.transferred::before { background: #e27722; }
     .time { font-variant-numeric: tabular-nums; }
     .time strong { display: block; color: var(--violet); font-size: 20px; }
     .time span { display: block; margin-top: 5px; color: var(--muted); font-size: 13px; }
+    .time .time__label { margin: 0 0 5px; color: var(--orange); font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .time .time__old { width: fit-content; margin-top: 8px; padding: 5px 7px; border-radius: 7px; background: var(--orange-soft); color: var(--orange); font-size: 11px; font-weight: 800; line-height: 1.3; }
     .lesson h3 { margin: 0; font-size: 17px; line-height: 1.32; }
     .meta { display: flex; flex-wrap: wrap; gap: 7px 14px; margin-top: 10px; color: var(--muted); font-size: 13px; }
     .meta span { display: inline-flex; align-items: center; gap: 6px; }
@@ -252,6 +257,20 @@
 
     .empty { display: none; padding: 64px 24px; border: 1px dashed #c7c1d7; border-radius: 26px; text-align: center; color: var(--muted); }
     .empty strong { display: block; color: var(--violet); font-size: 22px; margin-bottom: 6px; }
+
+    .update-note {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 26px;
+      padding: 16px 20px;
+      border: 1px solid #f1c99f;
+      border-radius: 18px;
+      background: var(--orange-soft);
+      color: #743607;
+    }
+    .update-note strong { flex: 0 0 auto; color: var(--orange); }
+    .update-note span { line-height: 1.45; }
 
     .download {
       margin-top: 30px;
@@ -306,6 +325,9 @@
       .lesson { grid-template-columns: 1fr; gap: 10px; padding: 18px; }
       .time { display: flex; align-items: baseline; gap: 7px; }
       .time span { margin: 0; }
+      .time.transferred-time { display: block; }
+      .time .time__old { margin-top: 8px; }
+      .update-note { align-items: flex-start; flex-direction: column; gap: 5px; }
       .badge { grid-column: 1; }
       .download { padding: 23px; }
       .download__actions, .button { width: 100%; }
@@ -351,7 +373,7 @@
   <section class="hero" id="top">
     <div class="hero__inner">
       <div>
-        <p class="eyebrow">Расписание занятий · ЦЗОПБ</p>
+        <p class="eyebrow">Расписание занятий · ЦЗОПБ · с переносами</p>
         <h1>Группа БСТ2251</h1>
         <p class="hero__lead">Учебные занятия с 5 по 14 октября 2026 года. Все встречи проходят дистанционно.</p>
       </div>
@@ -363,6 +385,10 @@
   </section>
 
   <main id="schedule">
+    <aside class="update-note" aria-label="Информация об обновлении расписания">
+      <strong>Обновлено 5 октября</strong>
+      <span>Шесть занятий Гадасина Д. В. перенесены на 6-ю и 7-ю пары. В карточках указаны новое и прежнее время.</span>
+    </aside>
     <div class="toolbar">
       <label class="search">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
@@ -389,11 +415,11 @@
       <section class="day" id="day-2026-10-05">
         <header class="day__date"><strong>5</strong><span>понедельник</span><small>октября 2026</small><small class="day__count" data-total="2">2 занятия</small></header>
         <div class="lessons">
-          <article class="lesson lecture" data-type="lecture" data-search="технологии и средства облачных сервисов гадасин д. в.">
-            <div class="time"><strong>11:15</strong><span>до 12:45</span></div><div><h3>Технологии и средства облачных сервисов</h3><div class="meta"><span><i class="dot"></i>Гадасин Д. В.</span><span><i class="dot"></i>2-я пара</span><span><i class="dot"></i>Дистанционно</span></div></div><span class="badge">Лекция</span>
+          <article class="lesson lecture transferred" data-type="lecture" data-search="технологии и средства облачных сервисов гадасин д. в. перенос">
+            <div class="time transferred-time"><span class="time__label">Новое время</span><strong>18:40</strong><span>до 20:10</span><span class="time__old">Перенос с 11:15–12:45</span></div><div><h3>Технологии и средства облачных сервисов</h3><div class="meta"><span><i class="dot"></i>Гадасин Д. В.</span><span><i class="dot"></i>6-я пара</span><span><i class="dot"></i>Дистанционно</span></div></div><span class="badge">Лекция</span>
           </article>
-          <article class="lesson lecture" data-type="lecture" data-search="технологии и средства облачных сервисов гадасин д. в.">
-            <div class="time"><strong>13:00</strong><span>до 14:30</span></div><div><h3>Технологии и средства облачных сервисов</h3><div class="meta"><span><i class="dot"></i>Гадасин Д. В.</span><span><i class="dot"></i>3-я пара</span><span><i class="dot"></i>Дистанционно</span></div></div><span class="badge">Лекция</span>
+          <article class="lesson lecture transferred" data-type="lecture" data-search="технологии и средства облачных сервисов гадасин д. в. перенос">
+            <div class="time transferred-time"><span class="time__label">Новое время</span><strong>20:25</strong><span>до 21:55</span><span class="time__old">Перенос с 13:00–14:30</span></div><div><h3>Технологии и средства облачных сервисов</h3><div class="meta"><span><i class="dot"></i>Гадасин Д. В.</span><span><i class="dot"></i>7-я пара</span><span><i class="dot"></i>Дистанционно</span></div></div><span class="badge">Лекция</span>
           </article>
         </div>
       </section>
@@ -401,17 +427,17 @@
       <section class="day" id="day-2026-10-06">
         <header class="day__date"><strong>6</strong><span>вторник</span><small>октября 2026</small><small class="day__count" data-total="4">4 занятия</small></header>
         <div class="lessons">
-          <article class="lesson lecture" data-type="lecture" data-search="мультимедийные информационные системы гадасин д. в.">
-            <div class="time"><strong>11:15</strong><span>до 12:45</span></div><div><h3>Мультимедийные информационные системы</h3><div class="meta"><span><i class="dot"></i>Гадасин Д. В.</span><span><i class="dot"></i>2-я пара</span><span><i class="dot"></i>Дистанционно</span></div></div><span class="badge">Лекция</span>
-          </article>
-          <article class="lesson lecture" data-type="lecture" data-search="мультимедийные информационные системы гадасин д. в.">
-            <div class="time"><strong>13:00</strong><span>до 14:30</span></div><div><h3>Мультимедийные информационные системы</h3><div class="meta"><span><i class="dot"></i>Гадасин Д. В.</span><span><i class="dot"></i>3-я пара</span><span><i class="dot"></i>Дистанционно</span></div></div><span class="badge">Лекция</span>
-          </article>
           <article class="lesson lecture" data-type="lecture" data-search="программно-конфигурируемая архитектура приложений и инфраструктуры докучаев в. а.">
             <div class="time"><strong>15:10</strong><span>до 16:40</span></div><div><h3>Программно-конфигурируемая архитектура приложений и инфраструктуры</h3><div class="meta"><span><i class="dot"></i>Докучаев В. А.</span><span><i class="dot"></i>4-я пара</span><span><i class="dot"></i>Дистанционно</span></div></div><span class="badge">Лекция</span>
           </article>
           <article class="lesson lecture" data-type="lecture" data-search="программно-конфигурируемая архитектура приложений и инфраструктуры докучаев в. а.">
             <div class="time"><strong>16:55</strong><span>до 18:25</span></div><div><h3>Программно-конфигурируемая архитектура приложений и инфраструктуры</h3><div class="meta"><span><i class="dot"></i>Докучаев В. А.</span><span><i class="dot"></i>5-я пара</span><span><i class="dot"></i>Дистанционно</span></div></div><span class="badge">Лекция</span>
+          </article>
+          <article class="lesson lecture transferred" data-type="lecture" data-search="мультимедийные информационные системы гадасин д. в. перенос">
+            <div class="time transferred-time"><span class="time__label">Новое время</span><strong>18:40</strong><span>до 20:10</span><span class="time__old">Перенос с 11:15–12:45</span></div><div><h3>Мультимедийные информационные системы</h3><div class="meta"><span><i class="dot"></i>Гадасин Д. В.</span><span><i class="dot"></i>6-я пара</span><span><i class="dot"></i>Дистанционно</span></div></div><span class="badge">Лекция</span>
+          </article>
+          <article class="lesson lecture transferred" data-type="lecture" data-search="мультимедийные информационные системы гадасин д. в. перенос">
+            <div class="time transferred-time"><span class="time__label">Новое время</span><strong>20:25</strong><span>до 21:55</span><span class="time__old">Перенос с 13:00–14:30</span></div><div><h3>Мультимедийные информационные системы</h3><div class="meta"><span><i class="dot"></i>Гадасин Д. В.</span><span><i class="dot"></i>7-я пара</span><span><i class="dot"></i>Дистанционно</span></div></div><span class="badge">Лекция</span>
           </article>
         </div>
       </section>
@@ -419,10 +445,10 @@
       <section class="day" id="day-2026-10-07">
         <header class="day__date"><strong>7</strong><span>среда</span><small>октября 2026</small><small class="day__count" data-total="4">4 занятия</small></header>
         <div class="lessons">
-          <article class="lesson lecture" data-type="lecture" data-search="технологии и средства облачных сервисов гадасин д. в."><div class="time"><strong>11:15</strong><span>до 12:45</span></div><div><h3>Технологии и средства облачных сервисов</h3><div class="meta"><span><i class="dot"></i>Гадасин Д. В.</span><span><i class="dot"></i>2-я пара</span><span><i class="dot"></i>Дистанционно</span></div></div><span class="badge">Лекция</span></article>
-          <article class="lesson lecture" data-type="lecture" data-search="технологии и средства облачных сервисов гадасин д. в."><div class="time"><strong>13:00</strong><span>до 14:30</span></div><div><h3>Технологии и средства облачных сервисов</h3><div class="meta"><span><i class="dot"></i>Гадасин Д. В.</span><span><i class="dot"></i>3-я пара</span><span><i class="dot"></i>Дистанционно</span></div></div><span class="badge">Лекция</span></article>
           <article class="lesson lecture" data-type="lecture" data-search="программно-конфигурируемая архитектура приложений и инфраструктуры докучаев в. а."><div class="time"><strong>15:10</strong><span>до 16:40</span></div><div><h3>Программно-конфигурируемая архитектура приложений и инфраструктуры</h3><div class="meta"><span><i class="dot"></i>Докучаев В. А.</span><span><i class="dot"></i>4-я пара</span><span><i class="dot"></i>Дистанционно</span></div></div><span class="badge">Лекция</span></article>
           <article class="lesson lecture" data-type="lecture" data-search="управление ит-проектами гнездова ю. в."><div class="time"><strong>16:55</strong><span>до 18:25</span></div><div><h3>Управление ИТ-проектами</h3><div class="meta"><span><i class="dot"></i>Гнездова Ю. В.</span><span><i class="dot"></i>5-я пара</span><span><i class="dot"></i>Дистанционно</span></div></div><span class="badge">Лекция</span></article>
+          <article class="lesson lecture transferred" data-type="lecture" data-search="технологии и средства облачных сервисов гадасин д. в. перенос"><div class="time transferred-time"><span class="time__label">Новое время</span><strong>18:40</strong><span>до 20:10</span><span class="time__old">Перенос с 11:15–12:45</span></div><div><h3>Технологии и средства облачных сервисов</h3><div class="meta"><span><i class="dot"></i>Гадасин Д. В.</span><span><i class="dot"></i>6-я пара</span><span><i class="dot"></i>Дистанционно</span></div></div><span class="badge">Лекция</span></article>
+          <article class="lesson lecture transferred" data-type="lecture" data-search="технологии и средства облачных сервисов гадасин д. в. перенос"><div class="time transferred-time"><span class="time__label">Новое время</span><strong>20:25</strong><span>до 21:55</span><span class="time__old">Перенос с 13:00–14:30</span></div><div><h3>Технологии и средства облачных сервисов</h3><div class="meta"><span><i class="dot"></i>Гадасин Д. В.</span><span><i class="dot"></i>7-я пара</span><span><i class="dot"></i>Дистанционно</span></div></div><span class="badge">Лекция</span></article>
         </div>
       </section>
 
