@@ -44,7 +44,7 @@ test("the BST2251 schedule page publishes a downloadable calendar", () => {
 
   assert.ok(existsSync(schedulePagePath), "schedule/index.html must be published");
   assert.ok(existsSync(calendarPath), "the schedule calendar must be published");
-  assert.match(homePage, /href="\/schedule\/"/);
+  assert.doesNotMatch(homePage, /href="\/schedule\/"/);
 
   const schedulePage = readFileSync(schedulePagePath, "utf8");
   assert.match(schedulePage, /href="\.\/BST2251-schedule\.ics"/);
